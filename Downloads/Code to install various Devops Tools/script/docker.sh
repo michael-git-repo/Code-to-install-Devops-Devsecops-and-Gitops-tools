@@ -1,8 +1,20 @@
 #!/bin/bash
 set -e
 
-if command -v docker &> /dev/null; then
+show_ports() {
+    cat <<'PORT_INFO'
+
+=== Port information ===
+Docker: no TCP listening port enabled by this script; the daemon uses a local Unix socket.
+Container ports depend on the mappings you publish with docker run -p.
+PORT_INFO
+}
+
+if command -v docker > /dev/null 2>&1; then
     echo "🐳 Docker is already present! Stop trying to drown the whale. 🌊"
+    show_ports
+    echo 'To uninstall tools installed by this script, run:'
+    echo 'sudo apt-get remove -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin'
     exit 0
 fi
 
@@ -25,3 +37,7 @@ echo "
      (  🐳  🐳 )     Containers galore! \"Works on my machine\" is no longer an excuse. 😉
       \  __  / 
 "
+
+show_ports
+echo 'To uninstall tools installed by this script, run:'
+echo 'sudo apt-get remove -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin'

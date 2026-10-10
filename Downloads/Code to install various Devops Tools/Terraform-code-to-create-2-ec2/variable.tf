@@ -9,9 +9,9 @@ variable "instance_type" {
 }
 
 variable "windows_user" {
-  description = "Your Windows username"
+  description = "Windows profile folder name under C:/Users (Terraform runs in WSL)"
   type        = string
-  default     = "user"
+  default     = "USER"
 }
 
 variable "vpc_cidr" {

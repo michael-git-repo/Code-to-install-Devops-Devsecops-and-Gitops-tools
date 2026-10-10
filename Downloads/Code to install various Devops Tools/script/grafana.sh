@@ -1,8 +1,21 @@
 #!/bin/bash
 set -e
 
+show_ports() {
+    cat <<'PORT_INFO'
+
+=== Port information ===
+Grafana default port: 3000/TCP (HTTP).
+Default URL when running: http://<server-ip>:3000
+Custom service settings may use a different port.
+PORT_INFO
+}
+
 if dpkg -l | grep -q grafana; then
     echo "📊 Grafana is already installed! Time to stare at fancy dashboards all day. 📈"
+    show_ports
+    echo 'To uninstall tools installed by this script, run:'
+    echo 'sudo systemctl disable --now grafana-server && sudo apt-get remove -y grafana'
     exit 0
 fi
 
@@ -22,3 +35,7 @@ echo "
     |  📊  [  Loading  ]  |   Now you can look busy while doing nothing! 📊✨
     '------------------------'
 "
+
+show_ports
+echo 'To uninstall tools installed by this script, run:'
+echo 'sudo systemctl disable --now grafana-server && sudo apt-get remove -y grafana'

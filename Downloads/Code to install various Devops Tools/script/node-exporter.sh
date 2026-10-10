@@ -1,8 +1,23 @@
 #!/bin/bash
 set -e
 
-if command -v node_exporter &> /dev/null; then
+show_ports() {
+    cat <<'PORT_INFO'
+
+=== Port information ===
+Node Exporter default port: 9100/TCP (HTTP).
+Default metrics URL when running: http://<server-ip>:9100/metrics
+This script installs the binary only; start it separately.
+Custom service settings may use a different port.
+PORT_INFO
+}
+
+if command -v node_exporter > /dev/null 2>&1; then
     echo "📡 Node Exporter is already active and spying on CPU usage! 📈"
+    show_ports
+    echo 'To uninstall tools installed by this script, run:'
+    echo 'sudo rm -f -- /usr/local/bin/node_exporter'
+    echo 'If you started this tool separately, stop that process or service before removing its binaries.'
     exit 0
 fi
 
@@ -18,3 +33,8 @@ echo "
   ( o.o )  Node Exporter Installed! 
    > ^ <   It will watch your RAM like a cat watches a laser pointer. 🐱
 "
+
+show_ports
+echo 'To uninstall tools installed by this script, run:'
+echo 'sudo rm -f -- /usr/local/bin/node_exporter'
+echo 'If you started this tool separately, stop that process or service before removing its binaries.'

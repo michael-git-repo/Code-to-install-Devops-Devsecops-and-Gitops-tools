@@ -1,8 +1,19 @@
 #!/bin/bash
 set -e
 
-if command -v trivy &> /dev/null; then
+show_ports() {
+    cat <<'PORT_INFO'
+
+=== Port information ===
+Trivy: no local listening port for normal CLI scans; this script does not start a server.
+PORT_INFO
+}
+
+if command -v trivy > /dev/null 2>&1; then
     echo "🛡️ Trivy is already installed! Your system is guarded like Fort Knox. 🏰"
+    show_ports
+    echo 'To uninstall tools installed by this script, run:'
+    echo 'sudo apt-get remove -y trivy'
     exit 0
 fi
 
@@ -20,3 +31,7 @@ echo "
    (  =\"=  )  Scanning your code vulnerabilities so hackers cry. 🛡️
     (_____)
 "
+
+show_ports
+echo 'To uninstall tools installed by this script, run:'
+echo 'sudo apt-get remove -y trivy'

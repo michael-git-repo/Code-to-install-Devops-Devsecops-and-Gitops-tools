@@ -1,8 +1,17 @@
 #!/bin/bash
 set -e
 
+show_ports() {
+    cat <<'PORT_INFO'
+
+=== Port information ===
+AWS CLI: no local listening port (command-line tool).
+Terraform: no local listening port for normal CLI use.
+PORT_INFO
+}
+
 # Checking AWS CLI
-if command -v aws &> /dev/null; then
+if command -v aws > /dev/null 2>&1; then
     echo "☁️  AWS CLI is already installed! No need to launch another satellite. 🚀"
 else
     echo "=== Installing AWS CLI v2 ==="
@@ -20,7 +29,7 @@ else
 fi
 
 # Checking Terraform
-if command -v terraform &> /dev/null; then
+if command -v terraform > /dev/null 2>&1; then
     echo "🏗️  Terraform is already installed! Your infrastructure is already rock solid. 🪨"
 else
     echo "=== Installing Terraform ==="
@@ -33,3 +42,8 @@ else
     [====]  You can now destroy whole cloud infrastructures with 1 typo. 💥
 "
 fi
+
+show_ports
+echo 'To uninstall tools installed by this script, run:'
+echo 'sudo rm -f -- /usr/local/bin/aws /usr/local/bin/aws_completer && sudo rm -rf -- /usr/local/aws-cli'
+echo 'sudo apt-get remove -y terraform'

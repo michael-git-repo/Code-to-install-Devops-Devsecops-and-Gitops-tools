@@ -1,8 +1,19 @@
 #!/bin/bash
 set -e
 
-if command -v ansible &> /dev/null; then
+show_ports() {
+    cat <<'PORT_INFO'
+
+=== Port information ===
+Ansible: no local listening port (command-line tool).
+PORT_INFO
+}
+
+if command -v ansible > /dev/null 2>&1; then
     echo "🤖 Ansible is already installed! Automation overlord is ready. ⚡"
+    show_ports
+    echo 'To uninstall tools installed by this script, run:'
+    echo 'sudo apt-get remove -y ansible ansible-core'
     exit 0
 fi
 
@@ -19,3 +30,7 @@ echo "
     \\  _  /
      \`---\`
 "
+
+show_ports
+echo 'To uninstall tools installed by this script, run:'
+echo 'sudo apt-get remove -y ansible ansible-core'

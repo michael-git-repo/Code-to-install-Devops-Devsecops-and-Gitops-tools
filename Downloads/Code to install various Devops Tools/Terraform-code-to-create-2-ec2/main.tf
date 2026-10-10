@@ -32,10 +32,11 @@ resource "aws_key_pair" "shared_deploy_key" {
   public_key = tls_private_key.shared_key.public_key_openssh
 }
 
-# 3. Save PEM key directly to C:\Users\user\Downloads\shared-devops-key.pem
+# 3. From WSL, save the PEM key directly to the Windows Downloads folder.
 resource "local_file" "pem_file" {
-  content  = tls_private_key.shared_key.private_key_pem
-  filename = "C:/Users/${var.windows_user}/Downloads/shared-devops-key.pem"
+  content         = tls_private_key.shared_key.private_key_pem
+  filename        = "/mnt/c/Users/${var.windows_user}/Downloads/shared-devops-key.pem"
+  file_permission = "0600"
 }
 
 # 4. Fetch Ubuntu 22.04 LTS AMI
